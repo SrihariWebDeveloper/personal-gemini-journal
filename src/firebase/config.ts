@@ -3,8 +3,14 @@ import { getAuth, GoogleAuthProvider } from 'firebase/auth';
 import { getFirestore, doc, getDocFromServer } from 'firebase/firestore';
 import firebaseConfig from '../../firebase-applet-config.json';
 
+// Support runtime environment variable override for public client config
+const resolvedFirebaseConfig = {
+  ...firebaseConfig,
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || firebaseConfig.apiKey || 'AIzaSyCQNrw7zIkhU7b0_XrIi9F9rqV9KUkB0bI',
+};
+
 // Initialize Firebase client app singleton
-const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+const app = !getApps().length ? initializeApp(resolvedFirebaseConfig) : getApp();
 
 // Firebase Auth client
 export const auth = getAuth(app);
