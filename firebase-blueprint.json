@@ -1,0 +1,53 @@
+{
+  "entities": {
+    "JournalEntry": {
+      "title": "JournalEntry",
+      "description": "A user's private personal journal session with Gemini conversations and AI insights",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "messages": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "role": { "type": "string" },
+              "content": { "type": "string" },
+              "timestamp": { "type": "string" }
+            },
+            "required": ["role", "content"]
+          }
+        },
+        "summary": { "type": "string" },
+        "mood": { "type": "string" },
+        "topics": { "type": "array", "items": { "type": "string" } },
+        "insights": { "type": "array", "items": { "type": "string" } },
+        "nextAction": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["title", "messages", "createdAt"]
+    },
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile information and journal preferences",
+      "type": "object",
+      "properties": {
+        "displayName": { "type": "string" },
+        "email": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "lastActive": { "type": "string" }
+      }
+    }
+  },
+  "firestore": {
+    "/users/{uid}/journalEntries/{entryId}": {
+      "entity": "JournalEntry",
+      "description": "User's personal journal entries strictly isolated under their own authenticated UID"
+    },
+    "/users/{uid}": {
+      "entity": "UserProfile",
+      "description": "User's private profile and preferences"
+    }
+  }
+}
